@@ -4,22 +4,22 @@ import AdminLayout from "../../Layouts/AdminLayout";
 
 function Edit({ product }) {
     const categoryData = ["TV/Monitors", "PC", "Gaming/Console", "Phones"];
-    const [name, setName] = useState(product.name);
-    const [price, setPrice] = useState(product.price);
-    const [stock, setStock] = useState(product.stock);
-    const [category, setCategory] = useState(product.category);
-    const [description, setDescription] = useState(product.description);
+    const [productDetails, setProductDetails] = useState({
+        name: product.name,
+        price: product.price,
+        stock: product.stock,
+        category: product.category,
+        description: product.description,
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setProductDetails((prev) => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        router.put(`/products/${product.id}`, {
-            name,
-            price,
-            stock,
-            category,
-            description,
-        });
+        router.put(`/products/${product.id}`, productDetails);
     };
 
     return (
@@ -40,6 +40,7 @@ function Edit({ product }) {
                 <div className="py-8 px-4 max-w-2xl lg:py-4">
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                            {/* Product Name */}
                             <div className="sm:col-span-2">
                                 <label
                                     htmlFor="name"
@@ -48,8 +49,8 @@ function Edit({ product }) {
                                     Product Name
                                 </label>
                                 <input
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    value={productDetails.name}
+                                    onChange={handleInputChange}
                                     type="text"
                                     name="name"
                                     id="name"
@@ -59,6 +60,7 @@ function Edit({ product }) {
                                 />
                             </div>
 
+                            {/* Price */}
                             <div className="w-full">
                                 <label
                                     htmlFor="price"
@@ -67,8 +69,8 @@ function Edit({ product }) {
                                     Price
                                 </label>
                                 <input
-                                    value={price}
-                                    onChange={(e) => setPrice(e.target.value)}
+                                    value={productDetails.price}
+                                    onChange={handleInputChange}
                                     type="number"
                                     name="price"
                                     id="price"
@@ -78,6 +80,7 @@ function Edit({ product }) {
                                 />
                             </div>
 
+                            {/* Stock */}
                             <div className="w-full">
                                 <label
                                     htmlFor="stock"
@@ -86,8 +89,8 @@ function Edit({ product }) {
                                     Stock
                                 </label>
                                 <input
-                                    value={stock}
-                                    onChange={(e) => setStock(e.target.value)}
+                                    value={productDetails.stock}
+                                    onChange={handleInputChange}
                                     type="number"
                                     name="stock"
                                     id="stock"
@@ -97,6 +100,7 @@ function Edit({ product }) {
                                 />
                             </div>
 
+                            {/* Category */}
                             <div>
                                 <label
                                     htmlFor="category"
@@ -105,10 +109,9 @@ function Edit({ product }) {
                                     Category
                                 </label>
                                 <select
-                                    value={category}
-                                    onChange={(e) =>
-                                        setCategory(e.target.value)
-                                    }
+                                    value={productDetails.category}
+                                    onChange={handleInputChange}
+                                    name="category"
                                     id="category"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 >
@@ -121,6 +124,7 @@ function Edit({ product }) {
                                 </select>
                             </div>
 
+                            {/* Description */}
                             <div className="sm:col-span-2">
                                 <label
                                     htmlFor="description"
@@ -129,10 +133,9 @@ function Edit({ product }) {
                                     Description
                                 </label>
                                 <textarea
-                                    value={description}
-                                    onChange={(e) =>
-                                        setDescription(e.target.value)
-                                    }
+                                    value={productDetails.description}
+                                    onChange={handleInputChange}
+                                    name="description"
                                     id="description"
                                     rows="8"
                                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
