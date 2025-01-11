@@ -12,12 +12,6 @@ function Create() {
     });
 
     const categoryData = ["TV/Monitors", "PC", "Gaming/Console", "Phones"];
-    const [selectedCategory, setSelectedCategory] = useState("");
-
-    const handleCategoryChange = (e) => {
-        setSelectedCategory(e.target.value);
-    };
-
     const handleChange = (e) => {
         const key = e.target.id;
         const value = e.target.value;
