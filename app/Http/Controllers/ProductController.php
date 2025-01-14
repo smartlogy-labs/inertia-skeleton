@@ -8,10 +8,20 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $product = Product::all();
-        return Inertia::render('Products/Index', ['products' => $product]);
+        $search = $request->input('search');
+
+        $products = Product::query()
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->paginate(10);
+
+        return Inertia::render('Products/Index', [
+            'products' => $products,
+            'searchQuery' => $search,
+        ]);
     }
 
     public function show(Product $product)
